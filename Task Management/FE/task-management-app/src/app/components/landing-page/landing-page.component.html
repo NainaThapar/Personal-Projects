@@ -1,0 +1,13 @@
+<header>
+    <app-header [isLoggedIn]=isLoggedIn></app-header> 
+  </header>
+<div class="landing-container">
+    <div class="text-section">
+        <div class="text">Stay Organized</div>
+        <div class="text">Stay Productive</div>
+        <p class="tagline">Streamline workflows and gain clear visibility across teams to make strategic decisions with confidence.</p>
+        <div *ngIf="isLoggedIn; else loginBtnTemplate"><button mat-raised-button routerLink="/dashboard" class="reg-btn" color="accent">Go to dashboard</button></div>
+        
+        <ng-template #loginBtnTemplate><button mat-flat-button routerLink="/register" [queryParams]="{ mode: 'register', authBtnText: 'Register', showSignup: false}" class="reg-btn" color="accent">Get started</button></ng-template>
+    </div>
+</div>

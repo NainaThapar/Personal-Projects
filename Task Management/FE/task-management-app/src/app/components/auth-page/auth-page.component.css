@@ -1,0 +1,51 @@
+.login-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.content-img {
+    width: 50vw;
+    height: 60vh;
+    padding: 15px;
+    margin-top: 60px;
+}
+
+.login-form {
+    margin-right: 200px;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    box-shadow: #e2e2e2;
+    margin-top: 70px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+    width: 35vw;
+    align-items: center;
+    text-align: center;
+    padding-top: 60px;
+}
+
+.user-icon {
+    font-size: 120px;
+    width: 120px;
+    height: 120px;
+    color: #ba005d;
+}
+
+.account-text {
+    margin: 20px;
+    color: #bcbcbc;
+}
+
+.signup {
+    text-decoration: underline;
+    color: #ba005d;
+    cursor: pointer;
+}
+
+.form-field-wrapper {
+    width: 35vw;
+}
+
+.mat-mdc-form-field {
+    width: 20vw !important;
+  }
+   

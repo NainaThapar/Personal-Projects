@@ -1,0 +1,24 @@
+
+.page-heading {
+    font-weight: 600;
+    padding: 10px 20px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    align-items: center;
+}
+
+.table-container {
+    border: 1px solid #ccc;
+    margin: 20px;
+  }
+
+  .action-btn {
+    border: none;
+    background-color: transparent;
+    margin-right: 10px;
+    cursor: pointer;
+  }

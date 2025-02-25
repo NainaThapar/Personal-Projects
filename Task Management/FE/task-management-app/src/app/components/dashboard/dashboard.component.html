@@ -1,0 +1,110 @@
+<div class="dashboard-container">
+  <div class="page-header">
+    <div><h2 class="page-heading">Tasks Overview</h2></div>
+</div>
+    <div class="page-content">
+        <div class="cards-container">
+            @for (card of cards; track card.title){
+                <app-overview-card [title]="card.title" [count]="card.count" ></app-overview-card>
+            }
+        </div>
+        <div class="filter-section">
+            <div class="search-container" color="mat-primary">
+                <mat-form-field appearance="outline" class="search-bar">
+                  <!-- <mat-label>Search</mat-label> -->
+                  <mat-icon matPrefix>search</mat-icon>
+                  <input matInput placeholder="Search tasks" [(ngModel)]="searchText" (input)="filterTasks($event)"/>
+                </mat-form-field>
+              </div>
+            <div class="filter">
+                <mat-form-field appearance="fill">
+                    <mat-label>Filter Status</mat-label>
+                    <mat-select [(value)]="selectedStatusFilter" (selectionChange)="onFilterChange($event, 'status')">
+                      <mat-option value="">All Status</mat-option>
+                      <mat-option *ngFor="let option of filterStatusOptions" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div class="filter">
+                <mat-form-field appearance="fill">
+                    <mat-label>Filter Priority</mat-label>
+                    <mat-select [(value)]="selectedPriorityFilter" (selectionChange)="onFilterChange($event, 'priority')">
+                      <mat-option value="">All Priority</mat-option>
+                      <mat-option *ngFor="let option of filterPriorityOptions" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+        </div>
+
+        <div class="table-container" *ngIf="filteredData.length > 0; else emptyTemplate">
+            <table mat-table [dataSource]="filteredData" matSort>
+              <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>TASK</th>
+                <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+              </ng-container>
+          
+              <ng-container matColumnDef="assignedTo">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ASSIGNED USER</th>
+                <td mat-cell *matCellDef="let element">{{ element.assignedTo?.username }}</td>
+              </ng-container>
+          
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>STATUS</th>
+                <td mat-cell *matCellDef="let element" ><span class="status" [ngClass]="getStatusClass(element.status)">{{ element.status }}</span></td>
+              </ng-container>
+
+              <ng-container matColumnDef="priority">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>PRIORITY</th>
+                <td mat-cell *matCellDef="let element" [ngClass]="getPriorityClass(element.priority)" class="priority">{{ element.priority }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="dueDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>DUE DATE</th>
+                <td mat-cell *matCellDef="let element" class="city">{{ element.dueDate }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ACTIONS</th>
+                <td mat-cell *matCellDef="let element" class="city">
+                    <button class="action-btn" (click)="openTaskModal(element)"><mat-icon color="primary">edit</mat-icon></button>
+                <button class="action-btn" (click)="deleteTask(element.id)"><mat-icon color="primary">delete</mat-icon></button>    
+                </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+
+          <ng-template #emptyTemplate>
+            <app-no-data message="No tasks found"></app-no-data>
+        </ng-template>
+        
+          
+        <!-- <div>
+            <h3>Your Tasks:</h3>
+            @for (task of tasks; track task.id) {
+                <div class="task-container">
+                    <p>Task Id: {{task.id}}</p>
+                    <div style="color: blueviolet; font-size: 20px;">{{task.title}}</div>
+                    <span style="color: green;">{{task.status}}</span>
+                    <span style="color: rgb(255, 161, 47); padding: 0 20px;;">{{task.priority}}</span>
+                <div style="color: cadetblue;">{{task.description}}
+                    <button mat-icon-button color="primary" (click)="openTaskModal(task)" style="cursor: pointer;">
+                        <mat-icon fontIcon="edit"></mat-icon> 
+                      </button>
+                      <button mat-icon-button color="primary" (click)="deleteTask(task.id)" style="cursor: pointer;">
+                        <mat-icon fontIcon="delete"></mat-icon> 
+                      </button>
+                </div>
+                </div>
+                
+            }
+        </div> -->
+    </div>
+</div>
+

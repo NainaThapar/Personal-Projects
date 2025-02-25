@@ -1,0 +1,26 @@
+.card-container {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 20px;
+    flex: 1;
+    justify-content: space-between;
+    background-color: #fff;
+    text-align: center;
+    box-sizing: border-box;
+    gap: 20px;
+    width: 14vw;
+    padding: 0 20px;
+    align-items: center;
+}
+
+.card-content {
+    justify-content: space-between;
+    font-weight: 300;
+    font-size: large;
+}
+
+.count {
+    font-size: xx-large;
+    font-weight: 700;
+}

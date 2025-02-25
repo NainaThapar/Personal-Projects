@@ -1,0 +1,84 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Primary: Deep Indigo */
+.mat-primary {
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+/* Accent: Emerald Green */
+.mat-accent {
+  color: #ba005d !important;
+}
+
+.mat-accent-bg {
+  background-color: #f2f2f2!important;
+}
+
+/* Warn: Crimson Red */
+.mat-warn {
+  color: #d32f2f !important;
+  background-color: #ffe6e6 !important;
+}
+
+/* Background & Text */
+body {
+  background-color: #fff;
+  color: #212121;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar Sidenav */
+.mat-sidenav {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Active Links */
+.active-link {
+  border-left: 4px solid #ba005d;
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+/* Button Styles */
+button.mat-button {
+  color: #ba005d;
+}
+
+button.mat-button:hover {
+  background-color: #d3dcf4;
+}
+
+div, p {
+  line-height: 1.5;
+}
+
+/* .mdc-notched-outline {
+  height: 73% !important;
+} */
+
+.mat-mdc-form-field-infix {
+  height: 16px;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #fff !important;
+}
+
+
+ 
+

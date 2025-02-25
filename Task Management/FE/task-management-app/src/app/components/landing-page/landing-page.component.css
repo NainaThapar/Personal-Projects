@@ -1,0 +1,30 @@
+.landing-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 550px;
+}
+
+.text {
+    text-align: center;
+    font-size: 70px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ba005d;
+    padding-bottom: 10px;
+}
+
+.tagline {
+    font-size: x-large;
+    font-family: cursive;
+    text-align: center;
+}
+
+.text-section {
+    text-align: center;
+}
+
+.reg-btn {
+    font-size: larger;
+    margin-top: 40px;
+    padding: 30px;
+}

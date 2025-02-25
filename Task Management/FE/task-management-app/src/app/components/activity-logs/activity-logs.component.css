@@ -1,0 +1,30 @@
+.page-heading {
+    font-weight: 600;
+    padding: 10px 20px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    align-items: center;
+}
+
+.export-btn {
+    background-color: #000 !important;
+    color: #fff !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-container {
+    margin-right: 20px;
+}
+
+.empty {
+    font-weight: 400;
+    font-size: large;
+    text-align: center;
+}

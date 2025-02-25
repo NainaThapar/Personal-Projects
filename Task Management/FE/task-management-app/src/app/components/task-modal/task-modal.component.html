@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>Edit Task</h2>
+<mat-dialog-content>
+    <form>
+        <div style="margin: 10px;">
+            <label>Title:</label>
+        <input type="text" [(ngModel)]="task.title" name="title" required>
+        </div>
+      
+        <div style="margin: 10px;">
+            <label>Description:</label>
+        <input type="text" [(ngModel)]="task.description" name="description">
+        </div>
+      
+        <div style="margin: 10px;">
+            <label>Status:</label>
+        <select [(ngModel)]="task.status" name="status">
+          <option value="To Do">To Do</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Done">Done</option>
+        </select>
+        </div>
+        
+      
+        <div style="margin: 10px;">
+            <label>Priority:</label>
+        <select [(ngModel)]="task.priority" name="priority">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        </div>
+
+        <div style="margin: 10px;">
+          <label>Assigned To:</label>
+          <select [(ngModel)]="task.assignedTo" name="assignedTo">
+            <option *ngFor="let user of users" [ngValue]="{id: user.id}">{{ user.username }}</option>
+          </select>
+        </div>
+
+      <div style="margin: 10px;">
+          <label>Due Date:</label>
+          <input type="date" [(ngModel)]="task.dueDate" name="dueDate" required>
+      </div>
+        
+      
+      </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button (click)="saveTask()">Save</button>
+</mat-dialog-actions>
+

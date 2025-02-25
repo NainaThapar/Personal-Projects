@@ -1,0 +1,45 @@
+<div class="content-wrapper">
+    <div class="page-header">
+        <div><h2 class="page-heading">Task Management</h2></div>
+        <div class="btn-container" *ngIf = "user?.role === 'ADMIN'"><button mat-flat-button class="add-btn" (click)="openTaskModal([])"><mat-icon>add</mat-icon>New Task</button></div>
+    </div>
+    <ng-container *ngIf="tasks?.length > 0 ; else emptyTemplate">
+        <div class="main-section">
+            <div class="todo-container card-container">
+                <div class="card-head">
+                    <div class="card-title"><h2>To Do</h2></div>
+                    <div class="count">{{ todoCount }}</div>
+                </div>
+                @for (task of todo; track task.id) {
+                    <app-task-card [title]="task.title" [user]="task.assignedTo.username" [priority]="task.priority" [dueDate]="task.dueDate"></app-task-card>
+                }
+    
+            </div>
+            <div class="progress-container card-container">
+                <div class="card-head">
+                    <div class="card-title"><h2>In Progress</h2></div>
+                    <div class="count">{{ progressCount }}</div>
+                </div>
+                @for (task of progress; track task.id) {
+                    <app-task-card [title]="task.title" [user]="task.assignedTo.username" [priority]="task.priority" [dueDate]="task.dueDate"></app-task-card>
+                }
+            </div>
+            <div class="done-container card-container">
+                <div class="card-head">
+                    <div class="card-title"><h2>Done</h2></div>
+                    <div class="count">{{ doneCount }}</div>
+                </div>
+                @for (task of done; track task.id) {
+                    <app-task-card [title]="task.title" [user]="task.assignedTo.username" [priority]="task.priority" [dueDate]="task.dueDate"></app-task-card>
+                }
+                
+            </div>
+    
+        </div>
+    </ng-container>
+    
+
+    <ng-template #emptyTemplate>
+        <app-no-data message="No tasks found"></app-no-data>
+    </ng-template>
+</div>

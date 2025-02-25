@@ -1,0 +1,39 @@
+<mat-sidenav-container class="sidenav-container">
+    <!-- Side Navigation -->
+    <mat-sidenav mode="side" opened class="mat-primary sidenav">
+      <mat-nav-list class="nav-list-style">
+        <div class="logo-container">
+          <img src="assets/images/app_logo.jpg" alt="App Logo" class="nav-logo" />
+        </div>
+        <a mat-list-item routerLink="/dashboard" routerLinkActive="mat-accent active-link nav-link mat-accent-bg">
+          <mat-icon color="accent">dashboard</mat-icon>
+          Dashboard
+        </a>
+        <a mat-list-item routerLink="/tasks" routerLinkActive="mat-accent active-link nav-link mat-accent-bg">
+          <mat-icon color="accent">task</mat-icon>
+          Tasks
+        </a>
+        <a mat-list-item routerLink="/activity" routerLinkActive="mat-accent active-link nav-link mat-accent-bg">
+          <mat-icon color="accent">assessment</mat-icon>
+          Activity Logs
+        </a>
+        <a mat-list-item routerLink="/users" routerLinkActive="mat-accent active-link nav-link mat-accent-bg" *ngIf="user?.role === 'ADMIN'">
+          <mat-icon color="accent">supervisor_account</mat-icon>
+          User Management
+        </a>
+        <a mat-list-item routerLink="" routerLinkActive="mat-accent active-link nav-link mat-accent-bg" (click)="logout()" [routerLinkActiveOptions]="{ exact: true }">
+          <mat-icon color="accent">logout</mat-icon>
+          Logout
+        </a>
+       
+      </mat-nav-list>
+      <div class="logged-in">Logged in as {{user?.username }}</div>
+    </mat-sidenav>
+  
+    <!-- Main Content -->
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+    
+  </mat-sidenav-container>
+  

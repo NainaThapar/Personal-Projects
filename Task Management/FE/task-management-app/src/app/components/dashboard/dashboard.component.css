@@ -1,0 +1,148 @@
+
+.task-container {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+
+}
+
+.page-heading {
+  font-weight: 600;
+  padding: 10px 20px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  align-items: center;
+}
+
+.dashboard-container {
+    background-color: #f9fafb;
+}
+
+.sidenav {
+    width: 17vw;
+    border-right: 1px solid #ababab;
+    height: 100%;
+}
+
+.page-content {
+    padding: 20px;
+    margin: 10px;
+}
+
+.page-heading {
+    font-weight: 600;
+}
+
+.cards-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.search-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin: 20px;
+    padding: 0px !important;
+  }
+  
+  .search-bar {
+    height: 5vh;
+    width: 100%;
+  }
+  
+  /* mat-icon {
+    color: var(--mdc-theme-primary, #6200ea);
+  } */
+
+  .mat-mdc-form-field {
+    margin: 0px !important;
+    /* height: 40px !important; */
+    padding: 0px !important;
+  }
+
+  .filter-section {
+    display: flex;
+    width: 100%;
+    gap: 5%;
+  }
+  
+  .filter {
+    align-content: center;
+  }
+
+  .mat-header-cell {
+    background-color: #f1f1f1;
+  }
+  
+  .mat-cell {
+    font-weight: normal;
+    padding: 12px 24px;
+  }
+  
+  .mat-column-name {
+    color: #4caf50;
+  }
+  
+  .mat-column-age {
+    color: #2196f3;
+  }
+  
+  .mat-column-city {
+    color: #ff5722;
+  }
+
+  .table-container {
+    border: 1px solid #ccc;
+  }
+
+  .status {
+    padding: 5px 15px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+  }
+
+  .status-todo {
+    background-color: rgb(254, 217, 148);
+  }
+
+  .status-progress {
+    background-color: rgb(254, 254, 143);
+  }
+
+  .status-completed {
+    background-color: rgb(210, 255, 144);
+  }
+
+  .status-low {
+    color: goldenrod;
+  }
+
+  .status-medium {
+    color: orange;
+  }
+
+  .status-high {
+    color: red;
+  }
+
+  .priority {
+    font-weight: 500;
+  }
+
+  .action-btn {
+    border: none;
+    background-color: transparent;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+ 
+

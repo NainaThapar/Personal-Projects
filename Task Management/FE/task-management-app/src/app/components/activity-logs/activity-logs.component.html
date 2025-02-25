@@ -1,0 +1,17 @@
+<div class="activity-log-container">
+    <div class="page-header">
+        <div><h2 class="page-heading">Activity Logs</h2></div>
+    </div>
+    <div class="main-content">
+        <ng-container *ngIf="data?.length > 0; else emptyTemplate">
+            @for (log of data; track log.id) {
+                <app-activity-card [action]="log.action" [timestamp]="log.timestamp" [details]="log.details" [user]="log.user"></app-activity-card>
+            }
+        </ng-container>
+        
+        <ng-template #emptyTemplate>
+            <div class="empty">No Activity Logs available.</div>
+        </ng-template>
+        
+    </div>
+</div>

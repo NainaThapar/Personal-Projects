@@ -1,0 +1,87 @@
+<div class="task-container">
+    <button (click)="openTaskModal()">New Task</button>
+    <form (submit)="addTask()">
+        <div style="margin: 10px;">
+            <label>Title:</label>
+        <input type="text" [(ngModel)]="task.title" name="title" required>
+        </div>
+      
+        <div style="margin: 10px;">
+            <label>Description:</label>
+        <input type="text" [(ngModel)]="task.description" name="description">
+        </div>
+      
+        <div style="margin: 10px;">
+            <label>Status:</label>
+        <select [(ngModel)]="task.status" name="status">
+          <option value="To Do">To Do</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Done">Done</option>
+        </select>
+        </div>
+        
+      
+        <div style="margin: 10px;">
+            <label>Priority:</label>
+        <select [(ngModel)]="task.priority" name="priority">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        </div>
+
+        <div style="margin: 10px;">
+            <label>Assigned To:</label>
+            <select [(ngModel)]="task.assignedTo" name="assignedTo">
+                <option *ngFor="let user of users" [ngValue]="{id: user.id}">{{ user.username }}</option>
+            </select>
+        </div>
+
+        <div style="margin: 10px;">
+            <label>Due Date:</label>
+            <input type="date" [(ngModel)]="task.dueDate" name="dueDate" required>
+        </div>
+        
+      
+        <button type="submit">Add Task</button>
+      </form>
+      
+    <!-- <div>
+        <p>Great! Let's get started.</p>
+        <h3>Please fill out the details below to create your task..</h3>
+        <p >
+            <mat-form-field>
+                <mat-label>Enter the title</mat-label>
+                <input matInput placeholder="title" id="title" type="text" [(ngModel)]="title">
+              </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <mat-label>Enter description</mat-label>
+                <input matInput placeholder="description" id="description" type="text" [(ngModel)]="description">
+              </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <mat-label >Enter Status</mat-label>
+                <input matInput placeholder="status" id="status" type="text" [(ngModel)]="status">
+              </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+                <mat-label>Assigned to</mat-label>
+                <input matInput placeholder="Assigned to" id="assignTo" type="text" [(ngModel)]="assignTo">
+              </mat-form-field>
+            
+        </p>
+        <p>
+            <mat-form-field>
+                <mat-label>Enter Priority</mat-label>
+                <input matInput placeholder="priority" id="priority" type="text" [(ngModel)]="priority">
+              </mat-form-field>
+        </p>
+        <p>{{title}}</p>
+        <button>Submit</button>
+    </div> -->
+
+</div>
