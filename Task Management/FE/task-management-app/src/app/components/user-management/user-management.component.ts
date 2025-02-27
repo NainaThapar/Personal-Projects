@@ -25,7 +25,7 @@ displayedColumns: string[] = ['id', 'name', 'role', 'actions'];
 
   ngOnInit() {
     this.userService.getAllUsers().subscribe((res: any) => {
-      this.users = res;
+      this.users = res.sort((a:any, b: any) => a.id - b.id);
       console.log(this.users);
     });
   }
@@ -40,7 +40,11 @@ displayedColumns: string[] = ['id', 'name', 'role', 'actions'];
   }
 
   saveRole(user: any) {
+    console.log("saving..", user.id, this.editedRole)
     user.role = this.editedRole;
+    this.userService.updateUserRole(user.id, this.editedRole).subscribe((res: any) => {
+      alert("User Role updated successfully!")
+    })
     this.editedRowId = null; // Exit edit mode
   }
 
@@ -50,6 +54,10 @@ displayedColumns: string[] = ['id', 'name', 'role', 'actions'];
 
   deleteUser(user: any) {
     this.users = this.users.filter((u: any) => u.id !== user.id);
+    this.userService.deleteUser(user.id).subscribe((res: any) => {
+      console.log(res);
+      alert("User deleted successfully!");
+    })
   }
 
 }

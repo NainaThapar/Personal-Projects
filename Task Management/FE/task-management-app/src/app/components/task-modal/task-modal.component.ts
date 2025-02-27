@@ -1,19 +1,43 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TaskService } from "../../services/task.service";
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatOptgroup } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatInput } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DATE_FORMATS, MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, NativeDateAdapter } from '@angular/material/core';
 
+export const MY_DATE_FORMATS = {
+  provide: MAT_DATE_FORMATS,
+  useValue: {
+    display: {
+      dateInput: { month: 'short', day: 'numeric', year: 'numeric' },
+      dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+    },
+    parse: { dateInput: 'YYYY-MM-DD' },
+  }
+};
 @Component({
   selector: 'app-task-modal',
-  imports: [MatDialogModule, FormsModule, MatFormFieldModule, CommonModule],
+  imports: [MatDialogModule, FormsModule, MatFormFieldModule, CommonModule, MatButton, MatSelect, MatOptgroup, MatOption, MatOptionModule, MatInputModule, MatInput, MatSelectModule, ReactiveFormsModule, MatDatepickerModule, MatNativeDateModule],
   templateUrl: './task-modal.component.html',
-  styleUrl: './task-modal.component.css'
+  styleUrl: './task-modal.component.css',
+  providers: [ 
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: NativeDateAdapter },
+    MY_DATE_FORMATS]
 })
 export class TaskModalComponent {
   originalTask: any;
@@ -27,9 +51,9 @@ export class TaskModalComponent {
     private userService: UserService,
     private cdr: ChangeDetectorRef
   ) {
-    this.originalTask = { ...data };  // Store a copy of the original task data
+    this.originalTask = { ...data.task };  // Store a copy of the original task data
     this.task = { ...this.originalTask };  // Bind to a separate task object for form
-    console.log(this.task);
+    console.log(this.task, 'modal');
   }
 
   ngOnInit() {
@@ -66,7 +90,7 @@ export class TaskModalComponent {
 
   cancel() {
     // Revert to original task data and close the modal
-    this.data = { ...this.originalTask };
+    this.data.task = { ...this.originalTask };
     this.cdr.detectChanges();  // Trigger change detection to update the UI
     this.dialogRef.close();    // Close the modal without saving
   }

@@ -1,52 +1,57 @@
-<h2 mat-dialog-title>Edit Task</h2>
+<h2 mat-dialog-title>{{ data.modalHeading }}</h2>
 <mat-dialog-content>
-    <form>
-        <div style="margin: 10px;">
-            <label>Title:</label>
-        <input type="text" [(ngModel)]="task.title" name="title" required>
-        </div>
-      
-        <div style="margin: 10px;">
-            <label>Description:</label>
-        <input type="text" [(ngModel)]="task.description" name="description">
-        </div>
-      
-        <div style="margin: 10px;">
-            <label>Status:</label>
-        <select [(ngModel)]="task.status" name="status">
-          <option value="To Do">To Do</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Done">Done</option>
-        </select>
-        </div>
-        
-      
-        <div style="margin: 10px;">
-            <label>Priority:</label>
-        <select [(ngModel)]="task.priority" name="priority">
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
-        </div>
+  <form>
+    <!-- Title -->
+    <mat-form-field appearance="fill" style="margin: 10px;">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" [(ngModel)]="task.title" name="title" required>
+    </mat-form-field>
 
-        <div style="margin: 10px;">
-          <label>Assigned To:</label>
-          <select [(ngModel)]="task.assignedTo" name="assignedTo">
-            <option *ngFor="let user of users" [ngValue]="{id: user.id}">{{ user.username }}</option>
-          </select>
-        </div>
+    <!-- Description -->
+    <mat-form-field appearance="fill" style="margin: 10px;">
+      <mat-label>Description</mat-label>
+      <input matInput type="text" [(ngModel)]="task.description" name="description">
+    </mat-form-field>
 
-      <div style="margin: 10px;">
-          <label>Due Date:</label>
-          <input type="date" [(ngModel)]="task.dueDate" name="dueDate" required>
-      </div>
-        
-      
-      </form>
+    <!-- Status -->
+    <mat-form-field appearance="fill" style="margin: 10px;">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="task.status" name="status">
+        <mat-option value="To Do">To Do</mat-option>
+        <mat-option value="In Progress">In Progress</mat-option>
+        <mat-option value="Done">Done</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Priority -->
+    <mat-form-field appearance="fill" style="margin: 10px;">
+      <mat-label>Priority</mat-label>
+      <mat-select [(ngModel)]="task.priority" name="priority">
+        <mat-option value="Low">Low</mat-option>
+        <mat-option value="Medium">Medium</mat-option>
+        <mat-option value="High">High</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Assigned To -->
+    <mat-form-field appearance="fill" style="margin: 10px;">
+      <mat-label>Assigned To</mat-label>
+      <mat-select [(ngModel)]="task.assignedTo" name="assignedTo">
+        <mat-option *ngFor="let user of users" [value]="user">{{ user.username }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Due Date -->
+    <mat-form-field appearance="fill" style="margin: 10px;">
+      <mat-label>Due Date</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="task.dueDate" name="dueDate" required>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="cancel()">Cancel</button>
-  <button mat-button (click)="saveTask()">Save</button>
+  <button mat-stroked-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button (click)="saveTask()" color="accent" class="save-btn">Save</button>
 </mat-dialog-actions>
 

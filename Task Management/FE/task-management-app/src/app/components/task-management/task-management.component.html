@@ -1,7 +1,7 @@
 <div class="content-wrapper">
     <div class="page-header">
         <div><h2 class="page-heading">Task Management</h2></div>
-        <div class="btn-container" *ngIf = "user?.role === 'ADMIN'"><button mat-flat-button class="add-btn" (click)="openTaskModal([])"><mat-icon>add</mat-icon>New Task</button></div>
+        <div class="btn-container" *ngIf = "user?.role === 'ADMIN'"><button mat-flat-button class="add-btn" (click)="openTaskModal(null)"><mat-icon>add</mat-icon>New Task</button></div>
     </div>
     <ng-container *ngIf="tasks?.length > 0 ; else emptyTemplate">
         <div class="main-section">

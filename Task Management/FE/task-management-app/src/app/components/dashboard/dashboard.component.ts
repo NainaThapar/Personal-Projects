@@ -14,6 +14,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NoDataComponent } from "../no-data/no-data.component";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 
 import { TaskService } from "../../services/task.service";
@@ -23,11 +26,12 @@ import { AuthService } from "../../services/auth.service";
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
-    imports: [FormsModule, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, OverviewCardComponent, MatSelectModule, MatOptionModule, CommonModule, MatTableModule, MatSortModule, MatPaginatorModule, NoDataComponent]
+    imports: [FormsModule, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, OverviewCardComponent, MatSelectModule, MatOptionModule, CommonModule, MatTableModule, MatSortModule, MatPaginatorModule, NoDataComponent, MatProgressSpinnerModule]
   })
   export class DashboardComponent {
     tasks: any[] = [];
     cards: any[] = [];
+    isLoading: boolean = true;
     // cards = [{title: "Total Tasks", count: this.tasks.length}, {title: "To Do", count: 8}, {title: "In Progress", count: 12}, {title: "Completed", count: 4}];
     searchText: string = "";
     selectedStatusFilter: string = '';
@@ -37,12 +41,6 @@ import { AuthService } from "../../services/auth.service";
 
     filters: { [key: string]: string } = {};
   displayedColumns: string[] = ['title', 'assignedTo', 'status', 'priority', 'dueDate', 'actions'];
-  dataSource = [
-    { task: 'John', a_user: 28, status: 'To Do', priority: 'High', dueDate: 'Mar 15, 2025', actions: 'act' },
-    { task: 'John', a_user: 28, status: 'Completed', priority: 'Low', dueDate: 'Mar 15, 2025', actions: 'act' },
-    { task: 'John', a_user: 28, status: 'In Progress', priority: 'Medium', dueDate: 'Mar 15, 2025', actions: 'act' },
-    { task: 'John', a_user: 28, status: 'Completed', priority: 'Low', dueDate: 'Mar 15, 2025', actions: 'act' }
-  ];
 
   filteredData = [...this.tasks];
 
@@ -81,23 +79,12 @@ import { AuthService } from "../../services/auth.service";
     }
   }
 
-//   onFilterChange(event: any): void {
-//     if (event.value) {
-//       this.filteredData = this.dataSource.filter(item =>
-//         item[event.value.toLowerCase()].toString().toLowerCase().includes('')
-//       );
-//     } else {
-//       this.filteredData = [...this.dataSource];
-//     }
-//   }
-// }
-
-    constructor(private taskService: TaskService, public dialog: MatDialog, private authService: AuthService) {}
+    constructor(private taskService: TaskService, public dialog: MatDialog, private authService: AuthService, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
       let apiCall$;
       const user = this.authService.getUserSession();
-      console.log(user)
+      console.log(user, 'ggg')
       if(user?.role === 'ADMIN'){
         apiCall$ = this.taskService.getAllTasks();
       }
@@ -105,10 +92,17 @@ import { AuthService } from "../../services/auth.service";
         apiCall$ = this.taskService.getUserTasks(user?.id);
       }
   
-      apiCall$.subscribe((data: any) => {
+      apiCall$.subscribe({
+        next: (data: any) => {
         this.tasks = data;
         this.processTasks(data);
-      })
+        this.isLoading = false;
+      },
+    error: (error: any) => {
+      console.error('Error fetching tasks: ', error);
+      this.isLoading = false;
+    }
+    })
     }
 
     processTasks(data: any) {
@@ -121,23 +115,31 @@ import { AuthService } from "../../services/auth.service";
             console.log(this.tasks)
     }
 
-    // openTaskModal(task: any ) {
-    //     this.dialog.open(TaskModalComponent, {
-    //       width: '400px', 
-    //       data: task
-    //     });
-    //   }
-
       openTaskModal(task: any): void {
         console.log(task);
+        const isUpdate = task !== null;
+  const modalHeading = isUpdate ? "Edit Task" : "New Task";
         const dialogRef = this.dialog.open(TaskModalComponent, {
           width: '500px',
-          data: task
+          data: {task, modalHeading}
         });
     
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe((result: any) => {
+          if (result) {  // Ensure result is not null
+            const index = this.tasks.findIndex((t: any) => t.id === result.id);
+            if (index !== -1) {
+              // Update existing task
+              this.tasks[index] = result;
+              this.filteredData[index] = result;
+            } else {
+              this.tasks.push(result);
+              this.filteredData.push(result);
+            }
+            
+            this.processTasks(this.tasks);
+            this.cdr.detectChanges();
+          }
           console.log('The dialog was closed', result);
-          // Handle any data returned from the modal here
         });
       }
 

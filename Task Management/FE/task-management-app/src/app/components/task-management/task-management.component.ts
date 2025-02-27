@@ -56,9 +56,11 @@ processTasks(data: any) {
 
 openTaskModal(task: any): void {
   console.log(task);
+  const isUpdate = task !== null;
+  const modalHeading = isUpdate ? "Edit Task" : "New Task";
   const dialogRef = this.dialog.open(TaskModalComponent, {
     width: '500px',
-    data: task
+    data: {task, modalHeading}
   });
 
   dialogRef.afterClosed().subscribe(result => {
