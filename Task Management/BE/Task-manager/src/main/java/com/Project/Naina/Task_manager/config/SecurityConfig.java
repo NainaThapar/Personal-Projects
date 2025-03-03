@@ -9,6 +9,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.http.HttpMethod;
+
 
 import static org.springframework.security.config.Customizer.withDefaults;
 import java.util.List;
@@ -23,10 +25,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for APIs
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN") // Admin access
                         .requestMatchers("/user/**").hasRole("USER") // User access
-                        .anyRequest().authenticated() // Must be last!
+                        .anyRequest().permitAll()
                 )
 //                .formLogin(withDefaults()) // Optional: Enable form login
                 .httpBasic(withDefaults()) // Optional: Enable basic authentication

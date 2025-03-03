@@ -36,8 +36,10 @@
     <!-- Assigned To -->
     <mat-form-field appearance="fill" style="margin: 10px;">
       <mat-label>Assigned To</mat-label>
-      <mat-select [(ngModel)]="task.assignedTo" name="assignedTo">
-        <mat-option *ngFor="let user of users" [value]="user">{{ user.username }}</mat-option>
+      <mat-select [ngModel]="currentUser?.role === 'ADMIN' ? assignedUser : currentUser" (ngModelChange)="onAssignedUserChange($event)" name="assignedTo" [compareWith]="compareUsers" [disabled]="currentUser?.role !== 'ADMIN'">
+          <mat-option *ngFor="let user of users" [value]="user">
+            {{ user.username }}
+          </mat-option>
       </mat-select>
     </mat-form-field>
 

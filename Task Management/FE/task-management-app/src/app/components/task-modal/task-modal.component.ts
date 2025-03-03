@@ -18,6 +18,7 @@ import { MatInput } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_FORMATS, MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, NativeDateAdapter } from '@angular/material/core';
+import { AuthService } from '../../services/auth.service';
 
 export const MY_DATE_FORMATS = {
   provide: MAT_DATE_FORMATS,
@@ -43,12 +44,15 @@ export class TaskModalComponent {
   originalTask: any;
   task: any;
   users: any = [];
+  assignedUser: String = '';
+  currentUser: any = {};
 
   constructor(
     public dialogRef: MatDialogRef<TaskModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private taskService: TaskService,
     private userService: UserService,
+    private authService: AuthService,
     private cdr: ChangeDetectorRef
   ) {
     this.originalTask = { ...data.task };  // Store a copy of the original task data
@@ -60,11 +64,22 @@ export class TaskModalComponent {
     this.userService.getAllUsers().subscribe(res => {
       this.users = res;
       console.log(this.users);
+      this.currentUser = this.authService.getUserSession();
+      console.log(this.currentUser)
+      if (this.task.assignedTo) {
+        this.assignedUser = this.users.find((user:any) => user.id === this.task.assignedTo.id);
+      }
     });
   }
 
   saveTask() {
     if (this.task.title !== '' && this.task.description !== '') {
+      if(this.currentUser.role === 'ADMIN'){
+        this.task.assignedTo = this.assignedUser;
+      }
+    else{
+      this.task.assignedTo = this.currentUser;
+    }
       if(this.task?.id){
         this.taskService.updateTask(this.task.id, this.task).subscribe((response: any) => {
           console.log('Task Updated:', response);
@@ -91,7 +106,17 @@ export class TaskModalComponent {
   cancel() {
     // Revert to original task data and close the modal
     this.data.task = { ...this.originalTask };
-    this.cdr.detectChanges();  // Trigger change detection to update the UI
-    this.dialogRef.close();    // Close the modal without saving
+    this.cdr.detectChanges();  
+    this.dialogRef.close();    
   }
+
+  compareUsers(user1: any, user2: any): boolean {
+    return user1 && user2 ? user1.id === user2.id : user1 === user2;
+  }
+
+  onAssignedUserChange(event: any) {
+    console.log(event)
+    this.assignedUser = event; 
+  }
+  
 }
