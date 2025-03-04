@@ -8,6 +8,6 @@
         <p class="tagline">Streamline workflows and gain clear visibility across teams to make strategic decisions with confidence.</p>
         <div *ngIf="isLoggedIn; else loginBtnTemplate"><button mat-raised-button routerLink="/dashboard" class="reg-btn" color="accent">Go to dashboard</button></div>
         
-        <ng-template #loginBtnTemplate><button mat-flat-button routerLink="/register" [queryParams]="{ mode: 'register', authBtnText: 'Register', showSignup: false}" class="reg-btn" color="accent">Get started</button></ng-template>
+        <ng-template #loginBtnTemplate><button mat-flat-button (click)="authNav('register', 'Register', false)" class="reg-btn" color="accent">Get started</button></ng-template>
     </div>
 </div>

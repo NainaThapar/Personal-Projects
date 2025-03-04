@@ -17,7 +17,8 @@ export class HeaderComponent implements OnInit {
   username: string | null = null;
   authSubscription!: Subscription;
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) {
+  }
 
   // ngOnInit(): void {
   //   this.authService.isLoggedIn$.subscribe((status: boolean) => {
@@ -30,6 +31,16 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.username = this.isLoggedIn ? this.authService.getUserSession()?.username : null;
+  }
+
+  authNav(page: string, btnText: string, showSignup: boolean) {
+    this.router.navigate([`/${page}`], { 
+      state: { 
+        mode: page, 
+        authBtnText: btnText, 
+        showSignup: showSignup 
+      } 
+    });
   }
 
   // updateLoginStatus() {

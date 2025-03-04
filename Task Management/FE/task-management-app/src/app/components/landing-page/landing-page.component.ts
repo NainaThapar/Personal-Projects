@@ -4,7 +4,7 @@ import { HeaderComponent } from '../header/header.component';
 import { AuthService } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet, Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class LandingPageComponent implements OnInit {
   isLoggedIn: boolean = false;
   authSubscription!: Subscription;
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, private router: Router) {}
 
 
   ngOnInit(): void {
@@ -30,6 +30,16 @@ export class LandingPageComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.authSubscription.unsubscribe(); // Prevent memory leaks
+  }
+
+  authNav(page: string, btnText: string, showSignup: boolean) {
+    this.router.navigate([`/${page}`], { 
+      state: { 
+        mode: page, 
+        authBtnText: btnText, 
+        showSignup: showSignup 
+      } 
+    });
   }
 
 

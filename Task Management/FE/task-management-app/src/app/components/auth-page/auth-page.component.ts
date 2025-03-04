@@ -24,22 +24,37 @@ export class AuthPageComponent {
   actionBtn: String = '';
 
 
-  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute){}
+  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute){
+    const navigation = this.router.getCurrentNavigation();
+    console.log('nav', navigation)
+    if (navigation?.extras.state) {
+      const state = navigation.extras.state;
+      this.mode = state['mode'] || 'login';
+      this.authBtnText = state['authBtnText'] || 'Login';
+      this.showSignup = state['showSignup'] ?? true;
+    }
+  }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.authBtnText = params['authBtnText'] || 'Login';  
-       this.mode = params['mode'];
-       this.showSignup = params['showSignup'] === 'true';
-       if(this.mode === 'login'){
-        this.accountText = "Don't have an account?";
-        this.actionBtn = "Sign Up";
-       }
-       else {
-        this.accountText = "Already have an account?";
-        this.actionBtn = "Sign In";
-       }
-    });
+    if (!this.mode) {
+      this.route.queryParams.subscribe(params => {
+        this.mode = params['mode'] || 'login';
+        this.authBtnText = params['authBtnText'] || 'Login';  
+        this.showSignup = params['showSignup'] === 'true';
+      });
+    }
+  
+    this.updateUI();
+  }
+
+  private updateUI(): void {
+    if (this.mode === 'login') {
+      this.accountText = "Don't have an account?";
+      this.actionBtn = "Sign Up";
+    } else {
+      this.accountText = "Already have an account?";
+      this.actionBtn = "Sign In";
+    }
   }
 
   onAuthClick() {
@@ -50,14 +65,26 @@ export class AuthPageComponent {
     }
   }
 
-  navigateToRegister() {
-    this.router.navigate(['/register'], { 
-      state: { 
-        mode: 'register', 
-        authBtnText: 'Register', 
-        showSignup: false 
-      } 
-    });
+  authNav() {
+    if(this.mode === 'login'){
+      this.router.navigate(['/register'], { 
+        state: { 
+          mode: 'register', 
+          authBtnText: 'Register', 
+          showSignup: false 
+        } 
+      });
+    }
+    else {
+      this.router.navigate(['/login'], { 
+        state: { 
+          mode: 'login', 
+          authBtnText: 'Login', 
+          showSignup: true 
+        } 
+      });
+    }
+    
   }
 
   login() {

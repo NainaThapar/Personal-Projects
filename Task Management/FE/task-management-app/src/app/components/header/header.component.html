@@ -9,8 +9,8 @@
         </ng-container>
   
         <ng-template #loginTemplate>
-          <button mat-button routerLink="/login" class="login-btn" [queryParams]="{ mode: 'login', authBtnText: 'Login', showSignup: 'true'}">Login</button>
-          <button mat-flat-button routerLink="/register" class="reg-btn" [queryParams]="{ mode: 'register', authBtnText: 'Register', showSignup: false}">Get started</button>
+          <button mat-button (click)="authNav('login', 'Login', true)" class="login-btn">Login</button>
+          <button mat-flat-button (click)="authNav('register', 'Register', false)" class="reg-btn">Get started</button>
         </ng-template>
       </div>
   </nav>
